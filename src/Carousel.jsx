@@ -23,20 +23,25 @@ export const Carousel = () => {
     },
   ];
   const updateIndex = (newIndex) => {
-    if (newIndex < 0) {
-      newIndex = 0;
-    } else if (newIndex >= items.length) {
-      newIndex = items.length - 1;
-    }
+      if (newIndex < 0) {
+        newIndex = items.length - 1;
+      } else if (newIndex >= items.length) {
+        newIndex = 0;
+      }
 
-    setActiveIndex(newIndex);
-  };
+      setActiveIndex(newIndex);
+    },
+    handlePrevClick = () => {
+      setActiveIndex((activeIndex - 1 + items.length) % items.length);
+    },
+    handleNextClick = () => {
+      setActiveIndex((activeIndex + 1) % items.length);
+    };
   return (
     <div className="carousel">
       <div
         className="inner"
-        style={{ transform: `translate(-${activeIndex * 100}%)`
-     }}
+        style={{ transform: `translate(-${activeIndex * 100}%)` }}
       >
         {items.map((item) => {
           return <CarouselItem item={item} width={"100%"} />;
@@ -44,21 +49,22 @@ export const Carousel = () => {
       </div>
 
       <div className="carousel-buttons">
-        <button
-          className="button-arrow"
-          onClick={() => {
-            updateIndex(activeIndex - 1);
-          }}
-        >
+        <button className="button-arrow" onClick={handlePrevClick}>
           <span class="material-symbols-outlined">arrow_back_ios</span>{" "}
         </button>
         <div className="indicators">
           {items.map((item, index) => {
             return (
               <button
-                className="indicator-buttons"
+                className={
+                  `carousel-item ${index === activeIndex ? "active" : ""}` +
+                  "indicator-buttons"
+                }
                 onClick={() => {
                   updateIndex(index);
+                }}
+                style={{
+                  transform: `translateX(${(index - activeIndex) * 30}%)`,
                 }}
               >
                 <span
@@ -74,12 +80,7 @@ export const Carousel = () => {
             );
           })}
         </div>
-        <button
-          className="button-arrow"
-          onClick={() => {
-            updateIndex(activeIndex + 1);
-          }}
-        >
+        <button className="button-arrow" onClick={handleNextClick}>
           <span class="material-symbols-outlined">arrow_forward_ios</span>
         </button>
       </div>
