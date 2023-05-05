@@ -57,7 +57,7 @@ export const Carousel = () => {
             return (
               <button
                 className={
-                  `carousel-item ${index === activeIndex ? "active" : ""}` +
+                  `${index === activeIndex ? "active" : ""}` +
                   "indicator-buttons"
                 }
                 onClick={() => {
@@ -74,7 +74,7 @@ export const Carousel = () => {
                       : "indicator-symbol"
                   }`}
                 >
-                  radio_button_checked
+                  x
                 </span>
               </button>
             );
